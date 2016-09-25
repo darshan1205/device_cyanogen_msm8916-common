@@ -86,6 +86,14 @@ on enable-low-power
     rm /data/system/perfd/default_values
     start perfd
 
+service charger /charger
+    class charger
+    group log
+    seclabel u:r:healthd:s0
+
+on charger
+    write /sys/module/lpm_levels/parameters/sleep_disabled 0
+
 on property:sys.boot_completed=1
     trigger enable-low-power
 
